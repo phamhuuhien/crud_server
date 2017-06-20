@@ -1,7 +1,7 @@
 import { ACTIONS } from '../constants'
 
 export function listFoodWithNutrients (data) {
-  const foods = data.report.foods
+  const foods = data
 
   return foods.reduce((arr, food) => {
     food.nutrients.forEach((nutrient) => {
