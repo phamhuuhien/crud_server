@@ -18,7 +18,7 @@ function handleTableActions (state, action) {
     case ACTIONS.RECEIVE_NUTRIENTS_DATA:
       return {
         isFetching: false,
-        data: listFoodWithNutrients(action.data)
+        data: action.data
       }
     case ACTIONS.FILTER_NUTRIENTS_DATA:
       return { filterString: action.filterString.toLowerCase() }

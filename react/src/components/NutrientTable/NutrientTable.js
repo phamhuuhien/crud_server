@@ -94,25 +94,25 @@ class NutrientTable extends React.Component {
           headerHeight={50}
           rowsCount={data.length}>
           <Column
-            columnKey='food'
+            columnKey='id'
             header={<SortHeaderCell {...headerCellProps}> Food </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={3}
             width={100} />
           <Column
-            columnKey='nutrient'
+            columnKey='name'
             header={<SortHeaderCell {...headerCellProps}> Nutrient </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={1}
             width={100} />
           <Column
-            columnKey='value'
+            columnKey='content'
             header={<SortHeaderCell {...headerCellProps}> Value </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.5}
             width={100} />
           <Column
-            columnKey='unit'
+            columnKey='content'
             header={<SortHeaderCell {...headerCellProps}> Unit </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.1}
