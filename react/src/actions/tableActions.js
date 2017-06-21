@@ -35,4 +35,16 @@ function sortBy (sortKey) {
   }
 }
 
-export default { fetchData, filterBy, sortBy }
+function openModal () {
+  return {
+    type: CONSTS.ACTIONS.OPEN_MODAL
+  }
+}
+
+function closeModal () {
+  return {
+    type: CONSTS.ACTIONS.CLOSE_MODAL
+  }
+}
+
+export default { fetchData, filterBy, sortBy, openModal, closeModal }

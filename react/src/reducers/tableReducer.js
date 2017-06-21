@@ -27,6 +27,14 @@ function handleTableActions (state, action) {
         sortKey: action.sortKey,
         sortDesc: state.sortKey === action.sortKey ? !state.sortDesc : false
       }
+    case ACTIONS.OPEN_MODAL:
+      return {
+        modalIsOpen : true
+      }
+    case ACTIONS.CLOSE_MODAL:
+      return {
+        modalIsOpen : false
+      }
     default:
       return state
   }
