@@ -9,7 +9,7 @@ const NutrientPage = (props) => {
   return (
     <div>
       <h2> Food Nutrients List </h2>
-      <button onClick={props.openModal}>New</button>
+      <button onClick={() => props.openModal()}>New</button>
       <NutrientTable {...props} />
       <UserModal {...props}/>
 
