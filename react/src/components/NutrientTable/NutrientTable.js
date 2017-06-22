@@ -94,28 +94,70 @@ class NutrientTable extends React.Component {
           headerHeight={50}
           rowsCount={data.length}>
           <Column
-            columnKey='id'
-            header={<SortHeaderCell {...headerCellProps}> Food </SortHeaderCell>}
+            columnKey='ma_kh'
+            header={<SortHeaderCell {...headerCellProps}> ma_kh </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={3}
             width={100} />
           <Column
-            columnKey='name'
-            header={<SortHeaderCell {...headerCellProps}> Nutrient </SortHeaderCell>}
+            columnKey='ten_kh'
+            header={<SortHeaderCell {...headerCellProps}> ten_kh </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={1}
             width={100} />
           <Column
-            columnKey='content'
-            header={<SortHeaderCell {...headerCellProps}> Value </SortHeaderCell>}
+            columnKey='dia_chi_ld'
+            header={<SortHeaderCell {...headerCellProps}> dia_chi_ld </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.5}
             width={100} />
           <Column
-            columnKey='content'
-            header={<SortHeaderCell {...headerCellProps}> Unit </SortHeaderCell>}
+            columnKey='so_dt_lh'
+            header={<SortHeaderCell {...headerCellProps}> so_dt_lh </SortHeaderCell>}
+            cell={<DataCell data={data} />}
+            flexGrow={0.5}
+            width={100} />
+          <Column
+            columnKey='ngay_sinh'
+            header={<SortHeaderCell {...headerCellProps}> ngay_sinh </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.1}
+            width={100} />
+          <Column
+            columnKey='loai_dv'
+            header={<SortHeaderCell {...headerCellProps}> loai_dv </SortHeaderCell>}
+            cell={<DataCell data={data} />}
+            flexGrow={3}
+            width={100} />
+          <Column
+            columnKey='goi_cuoc'
+            header={<SortHeaderCell {...headerCellProps}> goi_cuoc </SortHeaderCell>}
+            cell={<DataCell data={data} />}
+            flexGrow={1}
+            width={100} />
+          <Column
+            columnKey='gia_cuoc'
+            header={<SortHeaderCell {...headerCellProps}> gia_cuoc </SortHeaderCell>}
+            cell={<DataCell data={data} />}
+            flexGrow={0.5}
+            width={100} />
+          <Column
+            columnKey='thoi_gian_sd'
+            header={<SortHeaderCell {...headerCellProps}> thoi_gian_sd </SortHeaderCell>}
+            cell={<DataCell data={data} />}
+            flexGrow={0.1}
+            width={100} />
+          <Column
+            columnKey='so_nguoi_sd'
+            header={<SortHeaderCell {...headerCellProps}> so_nguoi_sd </SortHeaderCell>}
+            cell={<DataCell data={data} />}
+            flexGrow={3}
+            width={100} />
+          <Column
+            columnKey='ghi_chu'
+            header={<SortHeaderCell {...headerCellProps}> ghi_chu </SortHeaderCell>}
+            cell={<DataCell data={data} />}
+            flexGrow={1}
             width={100} />
         </ResponsiveTableWrapper>
       </div>
