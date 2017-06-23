@@ -7,7 +7,7 @@ export default (props) => {
   return (
     <header>
       <strong>
-        <IndexLink to='/'> React Redux Example </IndexLink>
+        <IndexLink to='/'> VNPT </IndexLink>
       </strong>
       <Navigation />
     </header>
