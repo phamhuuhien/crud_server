@@ -8,7 +8,7 @@ import { tableActions as actions } from '../../actions'
 const NutrientPage = (props) => {
   return (
     <div>
-      <h2> Food Nutrients List </h2>
+      <h2> Bang bao cao </h2>
       <button onClick={() => props.openModal()}>New</button>
       <NutrientTable {...props} />
       <UserModal {...props}/>
