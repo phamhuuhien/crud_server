@@ -1,6 +1,6 @@
 import React from 'react'
 import NutrientTable from '../../components/NutrientTable'
-import UserModal from '../../components/UserModal'
+import UserPage from '../UserPage'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { tableActions as actions } from '../../actions'
@@ -11,7 +11,7 @@ const NutrientPage = (props) => {
       <h2> Bang bao cao </h2>
       <button onClick={() => props.openModal()}>New</button>
       <NutrientTable {...props} />
-      <UserModal {...props}/>
+      <UserPage />
 
     </div>
   )

@@ -1,6 +1,7 @@
 import CONSTS from '../constants'
 import { combineReducers } from 'redux'
 import table from './tableReducer'
+import item from './itemReducer'
 
 // Updates error message to notify about the failed fetches.
 function errorMessage (state = {}, action) {
@@ -17,6 +18,7 @@ function errorMessage (state = {}, action) {
 
 const rootReducer = combineReducers({
   table,
+  item,
   errorMessage
 })
 

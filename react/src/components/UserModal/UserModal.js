@@ -1,9 +1,12 @@
 import React from 'react'
+import ReactDOM from 'react-dom';
 import { Modal, Button, Form, FormGroup, Col, FormControl, ControlLabel, Table, Panel } from 'react-bootstrap'
 
 let fields = [
 	'name', 'address', 'phone', 'birthday', 'numberUsed', 'note'
 ]
+
+let extraFields = ['plan', 'price', 'expired']
 
 let labels = {
 	name : 'Ten khach hang',
@@ -11,15 +14,53 @@ let labels = {
 	phone : 'So dien thoai',
 	birthday : 'Ngay sinh',
 	numberUsed : 'So nguoi dung',
-	note : 'Ghi chu'
+	note : 'Ghi chu',
+	service : 'Dich vu',
+	plan : 'Goi cuoc',
+	price : 'Gia cuoc',
+	expired : 'Thoi gian su dung'
 }
+
+let services = ['FTTH', 'ITV']
+
 class UserModal extends React.Component {
 
+  constructor (props) {
+    super(props)
+    this.handleOnChange = this.handleOnChange.bind(this)
+    this.handleAddButton = this.handleAddButton.bind(this)
+  }
+
+  handleOnChange(event) {
+  	let object = {}
+  	object[event.target.name] = event.target.value
+  	this.props.changeText(object)
+  }
+
+  handleAddButton() {
+  	this.props.addService({
+  		service : ReactDOM.findDOMNode(this.refs.service).value,
+  		plan : ReactDOM.findDOMNode(this.refs.plan).value,
+  		price : ReactDOM.findDOMNode(this.refs.price).value,
+  		expired : ReactDOM.findDOMNode(this.refs.expired).value
+  	})
+  }
+
 	contentPanel() {
-		return
-		(<Panel>
-			{this.tableContent()}
-		</Panel>)
+		return (<Panel>
+			<FormGroup controlId="formControlsSelect">
+      	<ControlLabel>{labels['service']}</ControlLabel>
+	      <FormControl componentClass="select" placeholder="select" ref="service">
+	      	{services.map(service => <option key={service} value={service}>{service}</option>)}
+	      </FormControl>
+    	</FormGroup>
+    	{extraFields.map(item => (<FormGroup key={item} controlId="formControlsSelect">
+      	<ControlLabel>{labels[item]}</ControlLabel>
+	      <FormControl type="text" placeholder="text" ref={item}>
+	      </FormControl>
+    	</FormGroup>))}
+    	<Button bsStyle="primary" onClick={this.handleAddButton}>Add</Button>
+			{this.tableContent()}</Panel>)
 	}
 
 	tableContent() {
@@ -31,29 +72,20 @@ class UserModal extends React.Component {
 	        <th>Goi cuoc</th>
 	        <th>Gia cuoc</th>
 	        <th>Thoi gian su dung</th>
+	        <th>Delete</th>
 	      </tr>
 	    </thead>
 	    <tbody>
+	    {this.props.services.map((item, index) => (
 	      <tr>
-	        <td>1</td>
-	        <td>Mark</td>
-	        <td>Otto</td>
-	        <td>@mdo</td>
-	        <td>@mdo</td>
+	        <td>{index + 1}</td>
+	        <td>{item['service']}</td>
+	        <td>{item['plan']}</td>
+	        <td>{item['price']}</td>
+	        <td>{item['expired']}</td>
+	        <td onClick={() => this.props.removeService(index)}>Delete</td>
 	      </tr>
-	      <tr>
-	        <td>2</td>
-	        <td>Jacob</td>
-	        <td>Thornton</td>
-	        <td>@fat</td>
-	        <td>@mdo</td>
-	      </tr>
-	      <tr>
-	        <td>3</td>
-	        <td colSpan="2">Larry the Bird</td>
-	        <td>@twitter</td>
-	        <td>@mdo</td>
-	      </tr>
+	    	))}
 	    </tbody>
 	  </Table>)
 	}
@@ -73,7 +105,7 @@ class UserModal extends React.Component {
 					        {labels[field]}
 					      </Col>
 					      <Col sm={10}>
-					        <FormControl type={field} placeholder={field} />
+					        <FormControl name={field} placeholder={field} onChange={this.handleOnChange}/>
 					      </Col>
 					    </FormGroup>))}
 

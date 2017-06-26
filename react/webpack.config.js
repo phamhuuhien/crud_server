@@ -65,7 +65,7 @@ module.exports = {
     './src/app'
   ],
   output: {
-    path: path.join(__dirname + '/../static/', 'js'),
+    path: path.join(__dirname + '/../target/classes/static/', 'js'),
     filename: 'app.js',
     publicPath: '/'
   },
@@ -73,14 +73,14 @@ module.exports = {
     extensions: ['*', '.js', '.styl']
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: { warnings: false }
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {NODE_ENV: JSON.stringify('production')}
-    }),
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compressor: { warnings: false }
+    // }),
+    // new webpack.DefinePlugin({
+    //   'process.env': {NODE_ENV: JSON.stringify('production')}
+    // }),
+    //new webpack.optimize.AggressiveMergingPlugin(),
+    //new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
     rules: [

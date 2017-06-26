@@ -41,10 +41,4 @@ function openModal () {
   }
 }
 
-function closeModal () {
-  return {
-    type: CONSTS.ACTIONS.CLOSE_MODAL
-  }
-}
-
-export default { fetchData, filterBy, sortBy, openModal, closeModal }
+export default { fetchData, filterBy, sortBy, openModal }
