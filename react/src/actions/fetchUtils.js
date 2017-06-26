@@ -35,7 +35,7 @@ function errorAction (error) {
 //      First parameter is the json response. By default, data is return in the object
 //      Default success action: {type: opts.types.receive, data: data}
 //  }
-export default function fetchDispatch (opts) {
+export function fetchDispatch (opts) {
   return (dispatch) => {
     dispatch({ type: opts.types.request })
 
@@ -45,5 +45,28 @@ export default function fetchDispatch (opts) {
         const obj = opts.onReceived ? opts.onReceived(data) : { data }
         return dispatch(Object.assign({ type: opts.types.receive }, obj))
       }).catch((error) => dispatch(errorAction(error)))
+  }
+}
+
+
+function saveSuccessful() {
+  return {
+  }
+
+}
+export function post (user) {
+  return (dispatch) => {
+    fetch('/user', {
+        method: 'POST',
+        header: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user),
+        dataType: 'json',
+      })
+      .then(response => response.json())
+      .then( json => dispatch( saveSuccessful( ) ))
+      .catch( err => console.log(err) )
   }
 }

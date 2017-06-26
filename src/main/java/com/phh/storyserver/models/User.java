@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by phhien on 11/21/2016.
@@ -15,20 +16,19 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int ma_kh;
-    private String ten_kh;
-    private String dia_chi_ld;
-    private String so_dt_lh;
-    private Date ngay_sinh;
-    private String loai_dv;
-    private String goi_cuoc;
-    private int gia_cuoc;
-    private int thoi_gian_sd;
-    private int so_nguoi_sd;
-    private String ghi_chu;
+    private int user_id;
+    private int code;
+    private String name;
+    private String address;
+    private String phone;
+    private Date birthday;
+    private int numberUsed;
+    private String note;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    Set<Service> services;
 
-    @JsonProperty("ngay_sinh")
+    @JsonProperty("birthday")
     public String getNgaySinh() {
-        return ngay_sinh.toString();
+        return birthday.toString();
     }
 }

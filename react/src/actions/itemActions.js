@@ -1,4 +1,5 @@
 import CONSTS from '../constants'
+import { post } from './fetchUtils'
 
 function changeText (data) {
 	return {
@@ -27,4 +28,10 @@ function removeService (index) {
   }
 }
 
-export default { changeText, closeModal, addService, removeService }
+function saveUser () {
+	return (dispatch, getState) => {
+     return dispatch(post(getState().item))
+  }
+}
+
+export default { changeText, closeModal, addService, removeService, saveUser }

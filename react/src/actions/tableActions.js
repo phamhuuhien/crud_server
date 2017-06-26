@@ -1,5 +1,5 @@
 import CONSTS from '../constants'
-import fetchDispatch from './fetchUtils'
+import { fetchDispatch } from './fetchUtils'
 
 const apiProps = {
   url: './users',

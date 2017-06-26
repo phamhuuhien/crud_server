@@ -115,7 +115,7 @@ class UserModal extends React.Component {
 
 		      <Modal.Footer>
 		        <Button onClick={() => this.props.closeModal()}>Close</Button>
-		        <Button bsStyle="primary">Save changes</Button>
+		        <Button bsStyle="primary" onClick={ () => this.props.saveUser()}>Save changes</Button>
 		      </Modal.Footer>
 
 	    	</Modal>
