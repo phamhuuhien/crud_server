@@ -2,15 +2,20 @@ package com.phh.storyserver.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
  * Created by phhien on 11/21/2016.
  */
-@Data
+@Setter
+@Getter
 @Entity
 public class User {
 
@@ -25,7 +30,7 @@ public class User {
     private int numberUsed;
     private String note;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    Set<Service> services;
+    private List<Service> services;
 
     @JsonProperty("birthday")
     public String getNgaySinh() {

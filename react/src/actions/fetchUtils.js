@@ -49,16 +49,19 @@ export function fetchDispatch (opts) {
 }
 
 
-function saveSuccessful() {
+function saveSuccessful(user) {
   return {
+    type: ACTIONS.ADD_USER_SUCCESS,
+    data : user
   }
 
 }
 export function post (user) {
+  console.log(user)
   return (dispatch) => {
     fetch('/user', {
         method: 'POST',
-        header: {
+        headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
@@ -66,7 +69,7 @@ export function post (user) {
         dataType: 'json',
       })
       .then(response => response.json())
-      .then( json => dispatch( saveSuccessful( ) ))
+      .then( json => dispatch( saveSuccessful( json ) ))
       .catch( err => console.log(err) )
   }
 }

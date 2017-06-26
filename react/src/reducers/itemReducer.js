@@ -20,8 +20,10 @@ function handleChange (state = {}, action) {
       return {
         modalIsOpen : true
       }
+    case ACTIONS.ADD_USER_SUCCESS:
     case ACTIONS.CLOSE_MODAL:
       return {
+        ...itemDefault,
         modalIsOpen : false
       }
     case ACTIONS.ADD_SERVICE:
@@ -33,6 +35,11 @@ function handleChange (state = {}, action) {
     	return {
     		services : state.services.slice(0)
     	}
+    case ACTIONS.EDIT_USER:
+      return {
+        ...action.user,
+        modalIsOpen : true
+      }
 
   return state
   }

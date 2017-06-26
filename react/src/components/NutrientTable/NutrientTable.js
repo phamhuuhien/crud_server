@@ -70,6 +70,14 @@ class NutrientTable extends React.Component {
     return this
   }
 
+  handleRowClick(event, index, data) {
+     console.log( 'here is the event:',event,
+               'the index:',index,
+               'the object:',data[index]
+    );
+    this.props.editUser(data[index])
+  }
+
   render () {
     const { isFetching, filterString, sortBy, sortKey, sortDesc } = this.props
     const headerCellProps = { sortBy, sortKey, sortDesc }
@@ -90,71 +98,48 @@ class NutrientTable extends React.Component {
           <h3 className='center'>No Matching Results :( </h3>}
 
         <ResponsiveTableWrapper
+          onRowDoubleClick={ (event, index) => this.handleRowClick(event, index, data)}
           rowHeight={50}
           headerHeight={50}
           rowsCount={data.length}>
           <Column
-            columnKey='ma_kh'
+            columnKey='code'
             header={<SortHeaderCell {...headerCellProps}> ma_kh </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={3}
             width={100} />
           <Column
-            columnKey='ten_kh'
+            columnKey='name'
             header={<SortHeaderCell {...headerCellProps}> ten_kh </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={1}
             width={100} />
           <Column
-            columnKey='dia_chi_ld'
+            columnKey='address'
             header={<SortHeaderCell {...headerCellProps}> dia_chi_ld </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.5}
             width={100} />
           <Column
-            columnKey='so_dt_lh'
+            columnKey='phone'
             header={<SortHeaderCell {...headerCellProps}> so_dt_lh </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.5}
             width={100} />
           <Column
-            columnKey='ngay_sinh'
+            columnKey='birthday'
             header={<SortHeaderCell {...headerCellProps}> ngay_sinh </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.1}
             width={100} />
           <Column
-            columnKey='loai_dv'
-            header={<SortHeaderCell {...headerCellProps}> loai_dv </SortHeaderCell>}
-            cell={<DataCell data={data} />}
-            flexGrow={3}
-            width={100} />
-          <Column
-            columnKey='goi_cuoc'
-            header={<SortHeaderCell {...headerCellProps}> goi_cuoc </SortHeaderCell>}
-            cell={<DataCell data={data} />}
-            flexGrow={1}
-            width={100} />
-          <Column
-            columnKey='gia_cuoc'
-            header={<SortHeaderCell {...headerCellProps}> gia_cuoc </SortHeaderCell>}
-            cell={<DataCell data={data} />}
-            flexGrow={0.5}
-            width={100} />
-          <Column
-            columnKey='thoi_gian_sd'
-            header={<SortHeaderCell {...headerCellProps}> thoi_gian_sd </SortHeaderCell>}
-            cell={<DataCell data={data} />}
-            flexGrow={0.1}
-            width={100} />
-          <Column
-            columnKey='so_nguoi_sd'
+            columnKey='numberUsed'
             header={<SortHeaderCell {...headerCellProps}> so_nguoi_sd </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={3}
             width={100} />
           <Column
-            columnKey='ghi_chu'
+            columnKey='note'
             header={<SortHeaderCell {...headerCellProps}> ghi_chu </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={1}

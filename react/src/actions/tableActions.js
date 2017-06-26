@@ -41,4 +41,11 @@ function openModal () {
   }
 }
 
-export default { fetchData, filterBy, sortBy, openModal }
+function editUser(user) {
+  return {
+    type: CONSTS.ACTIONS.EDIT_USER,
+    user
+  }
+}
+
+export default { fetchData, filterBy, sortBy, openModal, editUser }

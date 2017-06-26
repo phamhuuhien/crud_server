@@ -3,6 +3,7 @@ package com.phh.storyserver.controllers;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.phh.storyserver.models.Service;
 import com.phh.storyserver.models.User;
 import com.phh.storyserver.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,11 @@ public class UserController {
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public User post(@RequestBody User user) {
+        if(user.getServices() != null && user.getServices().size() > 0) {
+            for(Service service : user.getServices()) {
+                service.setUser(user);
+            }
+        }
         return userRepository.save(user);
     }
 

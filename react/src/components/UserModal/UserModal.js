@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import { Modal, Button, Form, FormGroup, Col, FormControl, ControlLabel, Table, Panel } from 'react-bootstrap'
+import DatePicker from "react-bootstrap-date-picker"
 
 let fields = [
 	'name', 'address', 'phone', 'birthday', 'numberUsed', 'note'
@@ -28,12 +29,19 @@ class UserModal extends React.Component {
   constructor (props) {
     super(props)
     this.handleOnChange = this.handleOnChange.bind(this)
+    this.handleDateChange = this.handleDateChange.bind(this)
     this.handleAddButton = this.handleAddButton.bind(this)
   }
 
   handleOnChange(event) {
   	let object = {}
   	object[event.target.name] = event.target.value
+  	this.props.changeText(object)
+  }
+
+  handleDateChange(value, formattedValue) {
+  	let object = {}
+  	object['birthday'] = value
   	this.props.changeText(object)
   }
 
@@ -90,6 +98,13 @@ class UserModal extends React.Component {
 	  </Table>)
 	}
 
+	switchGUI (field) {
+		if(field === 'birthday') {
+			return <DatePicker name="birthday" value={this.props.birthday} onChange={this.handleDateChange} />
+		} else {
+			return <FormControl name={field} placeholder={field} onChange={this.handleOnChange}/>
+		}
+	}
 	render () {
      return (
 	    <div className="static-modal">
@@ -105,7 +120,7 @@ class UserModal extends React.Component {
 					        {labels[field]}
 					      </Col>
 					      <Col sm={10}>
-					        <FormControl name={field} placeholder={field} onChange={this.handleOnChange}/>
+					      	{ this.switchGUI(field) }
 					      </Col>
 					    </FormGroup>))}
 

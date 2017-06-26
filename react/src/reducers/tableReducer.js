@@ -27,6 +27,10 @@ function handleTableActions (state, action) {
         sortKey: action.sortKey,
         sortDesc: state.sortKey === action.sortKey ? !state.sortDesc : false
       }
+    case ACTIONS.ADD_USER_SUCCESS:
+      return {
+        data : state.data.concat(action.data)
+      }
     default:
       return state
   }
