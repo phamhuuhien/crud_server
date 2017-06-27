@@ -54,8 +54,15 @@ function saveSuccessful(user) {
     type: ACTIONS.ADD_USER_SUCCESS,
     data : user
   }
-
 }
+
+function updateSuccessful(user) {
+  return {
+    type: ACTIONS.UPDATE_USER_SUCCESS,
+    data : user
+  }
+}
+
 export function post (user) {
   console.log(user)
   return (dispatch) => {
@@ -69,7 +76,13 @@ export function post (user) {
         dataType: 'json',
       })
       .then(response => response.json())
-      .then( json => dispatch( saveSuccessful( json ) ))
+      .then( json => {
+        if(user.user_id) {
+          dispatch( updateSuccessful( json ))
+        }
+        else {
+          dispatch( saveSuccessful( json ) )
+        }})
       .catch( err => console.log(err) )
   }
 }

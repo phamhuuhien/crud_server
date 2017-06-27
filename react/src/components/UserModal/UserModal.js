@@ -42,6 +42,7 @@ class UserModal extends React.Component {
   handleDateChange(value, formattedValue) {
   	let object = {}
   	object['birthday'] = value
+  	console.log(formattedValue)
   	this.props.changeText(object)
   }
 
@@ -100,9 +101,9 @@ class UserModal extends React.Component {
 
 	switchGUI (field) {
 		if(field === 'birthday') {
-			return <DatePicker name="birthday" value={this.props.birthday} onChange={this.handleDateChange} />
+			return <DatePicker name="birthday" dateFormat="DD/MM/YYYY" value={this.props.birthday} onChange={this.handleDateChange} />
 		} else {
-			return <FormControl name={field} placeholder={field} onChange={this.handleOnChange}/>
+			return <FormControl value={this.props[field]} name={field} placeholder={field} onChange={this.handleOnChange}/>
 		}
 	}
 	render () {

@@ -31,6 +31,21 @@ function handleTableActions (state, action) {
       return {
         data : state.data.concat(action.data)
       }
+    case ACTIONS.UPDATE_USER_SUCCESS:
+      // state.data.forEach(user => {
+      //   if(user.user_id === action.data.user_id) {
+      //     user = {...user, ...action.data}
+      //   }
+      // }) 
+      return {
+        data : state.data.map(user => {
+          if(user.user_id === action.data.user_id) {
+            return {...user, ...action.data}
+          } else {
+            return user
+          }
+        })
+      }
     default:
       return state
   }

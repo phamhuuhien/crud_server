@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -32,8 +33,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Service> services;
 
+    private static SimpleDateFormat dt = new SimpleDateFormat("MM/dd/yyyy");
+
     @JsonProperty("birthday")
     public String getNgaySinh() {
-        return birthday.toString();
+        return dt.format(birthday);
     }
 }
