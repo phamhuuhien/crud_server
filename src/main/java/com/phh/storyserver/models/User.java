@@ -23,7 +23,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int user_id;
-    private int code;
+    private String code;
     private String name;
     private String address;
     private String phone;

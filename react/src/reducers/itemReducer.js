@@ -1,8 +1,9 @@
 import { ACTIONS } from '../constants'
 
 let itemDefault = {
-	user_id : undefined
+	user_id : undefined,
 	name : '',
+	code : '',
 	address : '',
 	phone : '',
 	birthday : '',
@@ -26,7 +27,8 @@ function handleChange (state = {}, action) {
     case ACTIONS.CLOSE_MODAL:
       return {
         ...itemDefault,
-        modalIsOpen : false
+        modalIsOpen : false,
+        error : null
       }
     case ACTIONS.ADD_SERVICE:
     	return {
@@ -44,6 +46,10 @@ function handleChange (state = {}, action) {
         birthday: date.toISOString(),
         modalIsOpen : true
       }
+    case ACTIONS.ADD_USER_ERROR:
+    	return {
+    		error : action.error
+    	}
 
   return state
   }

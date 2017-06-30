@@ -2,15 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom';
 import { Modal, Button, Form, FormGroup, Col, FormControl, ControlLabel, Table, Panel } from 'react-bootstrap'
 import DatePicker from "react-bootstrap-date-picker"
+import './UserModal.styl'
 
 let fields = [
-	'name', 'address', 'phone', 'birthday', 'numberUsed', 'note'
+	'name', 'code', 'address', 'phone', 'birthday', 'numberUsed', 'note'
 ]
 
-let extraFields = ['plan', 'price', 'expired']
+let extraFields = ['plan', 'price', 'expired', 'dialPlan']
 
 let labels = {
 	name : 'Ten khach hang',
+	code : 'Ma khach hang',
 	address : 'Dia chi',
 	phone : 'So dien thoai',
 	birthday : 'Ngay sinh',
@@ -19,7 +21,21 @@ let labels = {
 	service : 'Dich vu',
 	plan : 'Goi cuoc',
 	price : 'Gia cuoc',
-	expired : 'Thoi gian su dung'
+	expired : 'Thoi gian su dung',
+	dialPlan : 'So thue bao'
+}
+
+let controlType = {
+	name : 'text',
+	code : 'text',
+	address : 'text',
+	phone : 'tel',
+	numberUsed : 'number',
+	note : 'text',
+	plan : 'text',
+	price : 'number',
+	expired : 'number',
+	dialPlan : 'number'
 }
 
 let services = ['FTTH', 'ITV']
@@ -51,24 +67,33 @@ class UserModal extends React.Component {
   		service : ReactDOM.findDOMNode(this.refs.service).value,
   		plan : ReactDOM.findDOMNode(this.refs.plan).value,
   		price : ReactDOM.findDOMNode(this.refs.price).value,
-  		expired : ReactDOM.findDOMNode(this.refs.expired).value
+  		expired : ReactDOM.findDOMNode(this.refs.expired).value,
+  		dialPlan : ReactDOM.findDOMNode(this.refs.dialPlan).value
   	})
+  	console.log(ReactDOM.findDOMNode(this.refs.expired).value)
   }
 
 	contentPanel() {
 		return (<Panel>
-			<FormGroup controlId="formControlsSelect">
-      	<ControlLabel>{labels['service']}</ControlLabel>
-	      <FormControl componentClass="select" placeholder="select" ref="service">
-	      	{services.map(service => <option key={service} value={service}>{service}</option>)}
-	      </FormControl>
-    	</FormGroup>
-    	{extraFields.map(item => (<FormGroup key={item} controlId="formControlsSelect">
-      	<ControlLabel>{labels[item]}</ControlLabel>
-	      <FormControl type="text" placeholder="text" ref={item}>
-	      </FormControl>
-    	</FormGroup>))}
-    	<Button bsStyle="primary" onClick={this.handleAddButton}>Add</Button>
+			<Col sm={3}>
+				<FormGroup controlId="formControlsSelect">
+	      	<ControlLabel>{labels['service']}</ControlLabel>
+		      <FormControl componentClass="select" placeholder="select" ref="service">
+		      	{services.map(service => <option key={service} value={service}>{service}</option>)}
+		      </FormControl>
+	    	</FormGroup>
+    	</Col>
+    	{extraFields.map(item => (<Col sm={item === 'expired' ? 3 : 2}>
+    		<FormGroup key={item} controlId="formControlsSelect">
+      		<ControlLabel>{labels[item]}</ControlLabel>
+	      	<FormControl type={controlType[item]} placeholder={item} ref={item}>
+	      	</FormControl>
+    		</FormGroup>
+  		</Col>))}
+
+  		<Col sm={12} className="add-button">
+    		<Button bsStyle="primary" onClick={this.handleAddButton}>Add</Button>
+    	</Col>
 			{this.tableContent()}</Panel>)
 	}
 
@@ -77,10 +102,11 @@ class UserModal extends React.Component {
 	    <thead>
 	      <tr>
 	        <th>#</th>
-	        <th>Dich vu</th>
-	        <th>Goi cuoc</th>
-	        <th>Gia cuoc</th>
-	        <th>Thoi gian su dung</th>
+	        <th>{labels['service']}</th>
+	        <th>{labels['plan']}</th>
+	        <th>{labels['price']}</th>
+	        <th>{labels['expired']}</th>
+	        <th>{labels['dialPlan']}</th>
 	        <th>Delete</th>
 	      </tr>
 	    </thead>
@@ -92,6 +118,7 @@ class UserModal extends React.Component {
 	        <td>{item['plan']}</td>
 	        <td>{item['price']}</td>
 	        <td>{item['expired']}</td>
+	        <td>{item['dialPlan']}</td>
 	        <td onClick={() => this.props.removeService(index)}>Delete</td>
 	      </tr>
 	    	))}
@@ -103,24 +130,24 @@ class UserModal extends React.Component {
 		if(field === 'birthday') {
 			return <DatePicker name="birthday" dateFormat="DD/MM/YYYY" value={this.props.birthday} onChange={this.handleDateChange} />
 		} else {
-			return <FormControl value={this.props[field]} name={field} placeholder={field} onChange={this.handleOnChange}/>
+			return <FormControl type={controlType[field]} required value={this.props[field]} name={field} placeholder={field} onChange={this.handleOnChange}/>
 		}
 	}
 	render () {
      return (
 	    <div className="static-modal">
-		    <Modal show={this.props.modalIsOpen}>
+		    <Modal bsSize="large" show={this.props.modalIsOpen}>
 		      <Modal.Header>
 		        <Modal.Title>Modal title</Modal.Title>
 		      </Modal.Header>
 
 		      <Modal.Body>
 		        <Form horizontal>
-		        	{fields.map(field =>(<FormGroup key={field} controlId={"formHorizontal" + field }>
-					      <Col componentClass={ControlLabel} sm={2}>
+		        	{fields.map(field =>(<FormGroup key={field} controlId={"formHorizontal" + field } validationState={this.props.error && this.props.error[field] ? "error" : null}>
+					      <Col componentClass={ControlLabel} sm={4}>
 					        {labels[field]}
 					      </Col>
-					      <Col sm={10}>
+					      <Col sm={8}>
 					      	{ this.switchGUI(field) }
 					      </Col>
 					    </FormGroup>))}
@@ -131,7 +158,7 @@ class UserModal extends React.Component {
 
 		      <Modal.Footer>
 		        <Button onClick={() => this.props.closeModal()}>Close</Button>
-		        <Button bsStyle="primary" onClick={ () => this.props.saveUser()}>Save changes</Button>
+		        <Button bsStyle="primary" type="submit" onClick={ () => this.props.saveUser()}>Save changes</Button>
 		      </Modal.Footer>
 
 	    	</Modal>

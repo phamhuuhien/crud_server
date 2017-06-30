@@ -9,9 +9,10 @@ function errorMessage (state = {}, action) {
 
   if (type === CONSTS.ACTIONS.RESET_ERROR_MESSAGE) {
     return null
-  } else if (error) {
-    return action.errorMessage
-  }
+  } 
+  //else if (error) {
+  //  return action.errorMessage
+  //}
 
   return state
 }

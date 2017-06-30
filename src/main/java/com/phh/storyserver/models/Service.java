@@ -22,7 +22,8 @@ public class Service {
     private String service;
     private String plan;
     private int price;
-    private Date expried;
+    private int expired;
+    private String dialPlan;
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore

@@ -28,9 +28,28 @@ function removeService (index) {
   }
 }
 
+function errorMessage (error) {
+	return {
+		type: CONSTS.ACTIONS.ADD_USER_ERROR,
+		error
+	}
+}
+
 function saveUser () {
 	return (dispatch, getState) => {
-     return dispatch(post(getState().item))
+		let item = getState().item
+		let error = {}
+		Object.keys(item).filter(key => key !== 'user_id' && key !== 'note').forEach(key => {
+			if(!item[key]) {
+				error[key] = "This Fields is required"
+			}
+		})
+
+		if(Object.keys(error).length === 0) {
+			return dispatch(post(item))
+		} else {
+      return dispatch(errorMessage(error))
+		}
   }
 }
 

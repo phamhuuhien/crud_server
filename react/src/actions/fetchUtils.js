@@ -64,7 +64,6 @@ function updateSuccessful(user) {
 }
 
 export function post (user) {
-  console.log(user)
   return (dispatch) => {
     fetch('/user', {
         method: 'POST',
