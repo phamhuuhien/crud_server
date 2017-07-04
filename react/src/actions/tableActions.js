@@ -2,7 +2,7 @@ import CONSTS from '../constants'
 import { fetchDispatch } from './fetchUtils'
 
 const apiProps = {
-  url: './users',
+  url: './services',
   types: {
     request: CONSTS.ACTIONS.REQUEST_NUTRIENTS_DATA,
     receive: CONSTS.ACTIONS.RECEIVE_NUTRIENTS_DATA

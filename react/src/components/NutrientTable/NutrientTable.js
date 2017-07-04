@@ -103,43 +103,43 @@ class NutrientTable extends React.Component {
           headerHeight={50}
           rowsCount={data.length}>
           <Column
-            columnKey='code'
+            columnKey='user.code'
             header={<SortHeaderCell {...headerCellProps}> ma_kh </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={3}
             width={100} />
           <Column
-            columnKey='name'
+            columnKey='user.name'
             header={<SortHeaderCell {...headerCellProps}> ten_kh </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={1}
             width={100} />
           <Column
-            columnKey='address'
+            columnKey='user.address'
             header={<SortHeaderCell {...headerCellProps}> dia_chi_ld </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.5}
             width={100} />
           <Column
-            columnKey='phone'
+            columnKey='user.phone'
             header={<SortHeaderCell {...headerCellProps}> so_dt_lh </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.5}
             width={100} />
           <Column
-            columnKey='birthday'
+            columnKey='user.birthday'
             header={<SortHeaderCell {...headerCellProps}> ngay_sinh </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.1}
             width={100} />
           <Column
-            columnKey='numberUsed'
+            columnKey='user.numberUsed'
             header={<SortHeaderCell {...headerCellProps}> so_nguoi_sd </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={3}
             width={100} />
           <Column
-            columnKey='note'
+            columnKey='user.note'
             header={<SortHeaderCell {...headerCellProps}> ghi_chu </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={1}
