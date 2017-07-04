@@ -44,8 +44,12 @@ public class UserController {
                 service.setUser(user);
             }
         }
-        userRepository.save(user);
-        serviceRepository.fin
+        User userSaved = userRepository.save(user);
+        List<Service> services = serviceRepository.findByUserId(userSaved.getUserId());
+        for(Service service : services) {
+            service.getUser().setServices(null);
+        }
+        return services;
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)

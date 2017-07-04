@@ -81,8 +81,9 @@ class NutrientTable extends React.Component {
   render () {
     const { isFetching, filterString, sortBy, sortKey, sortDesc } = this.props
     const headerCellProps = { sortBy, sortKey, sortDesc }
-
+    console.log('props.data', this.props.data)
     const data = this.sortData().filterData()
+    console.log('data', data)
 
     return (
       <div>
@@ -103,47 +104,108 @@ class NutrientTable extends React.Component {
           headerHeight={50}
           rowsCount={data.length}>
           <Column
-            columnKey='user.code'
-            header={<SortHeaderCell {...headerCellProps}> ma_kh </SortHeaderCell>}
+            columnKey='service'
+            header={<SortHeaderCell {...headerCellProps}> service </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={3}
             width={100} />
           <Column
-            columnKey='user.name'
-            header={<SortHeaderCell {...headerCellProps}> ten_kh </SortHeaderCell>}
+            columnKey='plan'
+            header={<SortHeaderCell {...headerCellProps}> plan </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={1}
             width={100} />
           <Column
-            columnKey='user.address'
-            header={<SortHeaderCell {...headerCellProps}> dia_chi_ld </SortHeaderCell>}
+            columnKey='price'
+            header={<SortHeaderCell {...headerCellProps}> price </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.5}
             width={100} />
           <Column
-            columnKey='user.phone'
-            header={<SortHeaderCell {...headerCellProps}> so_dt_lh </SortHeaderCell>}
+            columnKey='expired'
+            header={<SortHeaderCell {...headerCellProps}> expired </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.5}
             width={100} />
           <Column
-            columnKey='user.birthday'
-            header={<SortHeaderCell {...headerCellProps}> ngay_sinh </SortHeaderCell>}
+            columnKey='dialPlan'
+            header={<SortHeaderCell {...headerCellProps}> dialPlan </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={0.1}
             width={100} />
           <Column
-            columnKey='user.numberUsed'
+            columnKey='user'
             header={<SortHeaderCell {...headerCellProps}> so_nguoi_sd </SortHeaderCell>}
-            cell={<DataCell data={data} />}
+            cell={({rowIndex, columnKey, width, height}) => (
+              <Cell
+                width={width}
+                height={height}>
+                { data[rowIndex][columnKey]['numberUsed']}
+               </Cell>
+            )}
             flexGrow={3}
             width={100} />
-          <Column
-            columnKey='user.note'
-            header={<SortHeaderCell {...headerCellProps}> ghi_chu </SortHeaderCell>}
-            cell={<DataCell data={data} />}
-            flexGrow={1}
+            <Column
+            columnKey='user'
+            header={<SortHeaderCell {...headerCellProps}> code </SortHeaderCell>}
+            cell={({rowIndex, columnKey, width, height}) => (
+              <Cell
+                width={width}
+                height={height}>
+                { data[rowIndex][columnKey]['code']}
+               </Cell>
+            )}
+            flexGrow={3}
             width={100} />
+            <Column
+            columnKey='user'
+            header={<SortHeaderCell {...headerCellProps}> name </SortHeaderCell>}
+            cell={({rowIndex, columnKey, width, height}) => (
+              <Cell
+                width={width}
+                height={height}>
+                { data[rowIndex][columnKey]['name']}
+               </Cell>
+            )}
+            flexGrow={3}
+            width={100} />
+            <Column
+            columnKey='user'
+            header={<SortHeaderCell {...headerCellProps}> address </SortHeaderCell>}
+            cell={({rowIndex, columnKey, width, height}) => (
+              <Cell
+                width={width}
+                height={height}>
+                { data[rowIndex][columnKey]['address']}
+               </Cell>
+            )}
+            flexGrow={3}
+            width={100} />
+            <Column
+            columnKey='user'
+            header={<SortHeaderCell {...headerCellProps}> phone </SortHeaderCell>}
+            cell={({rowIndex, columnKey, width, height}) => (
+              <Cell
+                width={width}
+                height={height}>
+                { data[rowIndex][columnKey]['phone']}
+               </Cell>
+            )}
+            flexGrow={3}
+            width={100} />
+            <Column
+            columnKey='user'
+            header={<SortHeaderCell {...headerCellProps}> birthday </SortHeaderCell>}
+            cell={({rowIndex, columnKey, width, height}) => (
+              <Cell
+                width={width}
+                height={height}>
+                { data[rowIndex][columnKey]['birthday']}
+               </Cell>
+            )}
+            flexGrow={3}
+            width={100} />
+          
         </ResponsiveTableWrapper>
       </div>
     )
