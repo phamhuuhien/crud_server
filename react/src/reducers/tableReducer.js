@@ -21,7 +21,7 @@ function handleTableActions (state, action) {
         data: action.data
       }
     case ACTIONS.FILTER_NUTRIENTS_DATA:
-      return { filterString: action.filterString.toLowerCase() }
+      return { filterObject: action.filterObject }
     case ACTIONS.SORT_NUTRIENTS_DATA:
       return {
         sortKey: action.sortKey,

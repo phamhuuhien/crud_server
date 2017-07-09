@@ -21,10 +21,10 @@ function fetchData () {
   }
 }
 
-function filterBy (filterString) {
+function filterBy (filterObject) {
   return {
     type: CONSTS.ACTIONS.FILTER_NUTRIENTS_DATA,
-    filterString
+    filterObject
   }
 }
 

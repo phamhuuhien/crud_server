@@ -4,6 +4,8 @@ import { Column, Cell } from 'fixed-data-table'
 import ResponsiveTableWrapper from '../ResponsiveTableWrapper'
 import renderers from '../../modules/renderers'
 import { LABELS, CUSTOMER_FIELDS, SERVICE_FIELDS } from '../../constants'
+import { Panel, Form, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap'
+import './NutrientTable.styl'
 
 // Stateless cell components for Table component
 function SortHeaderCell ({children, sortBy, sortKey, sortDesc, columnKey, ...props}) {
@@ -44,7 +46,10 @@ class NutrientTable extends React.Component {
   handleFilterStringChange () {
     return (e) => {
       e.preventDefault()
-      this.props.filterBy(e.target.value)
+      let filterObject = {}
+      console.log('e', e.target)
+      filterObject[e.target.name] = e.target.value
+      this.props.filterBy(filterObject)
     }
   }
 
@@ -53,11 +58,11 @@ class NutrientTable extends React.Component {
   }
 
   filterData () {
-    const {data, filterString} = this.props
-    const str = filterString.toLowerCase()
-    return str !== ''
-      ? data.filter((r) => Object.values(r).some(this.doesMatch(str)))
-      : data
+    const {data, filterObject} = this.props
+    return filterObject && (filterObject.name || filterObject.service)
+        ? data.filter(r => filterObject.name ? r.user.name.toLowerCase().indexOf(filterObject.name) >= 0 : true 
+                        && filterObject.service ? r.service.toLowerCase().indexOf(filterObject.service) >= 0 : true)
+        : data
   }
 
   sortData () {
@@ -80,6 +85,25 @@ class NutrientTable extends React.Component {
     this.props.editUser(data[index])
   }
 
+  filterArea() {
+    return (<Panel className="filter_area" header="Filter area">
+      <Form inline>
+      <FormGroup controlId="formInlineName">
+        <ControlLabel>Name</ControlLabel>
+        {' '}
+        <FormControl name='name' type="text" placeholder="name" onChange={this.handleFilterStringChange()}/>
+      </FormGroup>
+      {' '}
+      <FormGroup controlId="formInlineEmail">
+        <ControlLabel>Service</ControlLabel>
+        {' '}
+        <FormControl name='service' type="text" placeholder="service" onChange={this.handleFilterStringChange()}/>
+      </FormGroup>
+      {' '}
+
+    </Form></Panel>)
+  }
+
   render () {
     const { isFetching, filterString, sortBy, sortKey, sortDesc } = this.props
     const headerCellProps = { sortBy, sortKey, sortDesc }
@@ -89,12 +113,7 @@ class NutrientTable extends React.Component {
 
     return (
       <div>
-        <input className='filter-input' value={filterString}
-          onChange={this.handleFilterStringChange()}
-          type='text' placeholder='Filter Rows'
-          autoCorrect='off' autoCapitalize='off' spellCheck='false' />
-        <br />
-
+        {this.filterArea()}
         {isFetching && data.length === 0 &&
           <div className='loader-box' />}
         {!isFetching && data.length === 0 &&
