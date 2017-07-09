@@ -3,6 +3,8 @@ package com.phh.storyserver.controllers;
 import com.phh.storyserver.models.Service;
 import com.phh.storyserver.repositories.ServiceRepository;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -24,6 +26,9 @@ import java.util.*;
  */
 @Controller
 public class ExcelController {
+
+
+
     @Autowired
     ServiceRepository serviceRepository;
 
@@ -34,14 +39,20 @@ public class ExcelController {
 
         // Creation sheet
         XSSFSheet sheet = workbook.createSheet("Participant");
+
+        CellStyle dateCellStyle = workbook.createCellStyle();
+        CreationHelper createHelper = workbook.getCreationHelper();
+        dateCellStyle.setDataFormat(
+                createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
         List<Service> services = serviceRepository.findAll();
         int indiceMap = 2;
         Map<String, Object[]> data = new TreeMap<>();
-        data.put("1", new Object[] { "name", "service" });
+        data.put("1", new Object[] { "name", "code", "address", "birthday", "phone", "service", "expired", "dialPlan" });
 
         for (Service service : services) {
             data.put(Integer.toString(indiceMap),
-                    new Object[] { service.getUser().getName(), service.getService() });
+                    new Object[] { service.getUser().getName(), service.getUser().getCode(), service.getUser().getAddress(),
+                            service.getUser().getBirthday(), service.getUser().getPhone(), service.getService(), service.getExpired(), service.getDialPlan() });
             indiceMap++;
         }
         // Iteration sur la map data et ecriture dans dans la feuille excel
@@ -57,6 +68,10 @@ public class ExcelController {
                     cell.setCellValue((String) obj);
                 else if (obj instanceof Integer)
                     cell.setCellValue((Integer) obj);
+                else if (obj instanceof Date) {
+                    cell.setCellValue((Date) obj);
+                    cell.setCellStyle(dateCellStyle);
+                }
             }
         }
 
