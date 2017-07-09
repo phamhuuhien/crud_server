@@ -40,10 +40,9 @@ function handleChange (state = {}, action) {
     		services : state.services.slice(0)
     	}
     case ACTIONS.EDIT_USER:
-    	let date = new Date(action.user.birthday)
       return {
         ...action.user,
-        birthday: date.toISOString(),
+        birthday: convertToIsoDate(action.user.birthday),
         modalIsOpen : true
       }
     case ACTIONS.ADD_USER_ERROR:
@@ -57,6 +56,13 @@ function handleChange (state = {}, action) {
 
 function itemReducer (state = itemDefault, action) {
   return Object.assign({}, state, handleChange(state, action))
+}
+
+function convertToIsoDate(dateString) {
+  let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+  let date = new Date(dateString)
+  let localISOTime = (new Date(date.getTime() - tzoffset)).toISOString().slice(0,-1);
+  return localISOTime
 }
 
 export default itemReducer
