@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Column, Cell } from 'fixed-data-table'
 import ResponsiveTableWrapper from '../ResponsiveTableWrapper'
 import renderers from '../../modules/renderers'
+import { LABELS, CUSTOMER_FIELDS, SERVICE_FIELDS } from '../../constants'
 
 // Stateless cell components for Table component
 function SortHeaderCell ({children, sortBy, sortKey, sortDesc, columnKey, ...props}) {
@@ -103,108 +104,24 @@ class NutrientTable extends React.Component {
           rowHeight={50}
           headerHeight={50}
           rowsCount={data.length}>
-          <Column
-            columnKey='service'
-            header={<SortHeaderCell {...headerCellProps}> service </SortHeaderCell>}
+          {CUSTOMER_FIELDS.map(field => (<Column
+            columnKey='user'
+            header={<SortHeaderCell {...headerCellProps}> {field} </SortHeaderCell>}
+            cell={({rowIndex, columnKey, width, height}) => (
+              <Cell
+                width={width}
+                height={height}>
+                { data[rowIndex][columnKey][field]}
+               </Cell>
+            )}
+            flexGrow={3}
+            width={100} />))}
+          {SERVICE_FIELDS.map(field => (<Column
+            columnKey={field}
+            header={<SortHeaderCell {...headerCellProps}> {field} </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={3}
-            width={100} />
-          <Column
-            columnKey='plan'
-            header={<SortHeaderCell {...headerCellProps}> plan </SortHeaderCell>}
-            cell={<DataCell data={data} />}
-            flexGrow={1}
-            width={100} />
-          <Column
-            columnKey='price'
-            header={<SortHeaderCell {...headerCellProps}> price </SortHeaderCell>}
-            cell={<DataCell data={data} />}
-            flexGrow={0.5}
-            width={100} />
-          <Column
-            columnKey='expired'
-            header={<SortHeaderCell {...headerCellProps}> expired </SortHeaderCell>}
-            cell={<DataCell data={data} />}
-            flexGrow={0.5}
-            width={100} />
-          <Column
-            columnKey='dialPlan'
-            header={<SortHeaderCell {...headerCellProps}> dialPlan </SortHeaderCell>}
-            cell={<DataCell data={data} />}
-            flexGrow={0.1}
-            width={100} />
-          <Column
-            columnKey='user'
-            header={<SortHeaderCell {...headerCellProps}> so_nguoi_sd </SortHeaderCell>}
-            cell={({rowIndex, columnKey, width, height}) => (
-              <Cell
-                width={width}
-                height={height}>
-                { data[rowIndex][columnKey]['numberUsed']}
-               </Cell>
-            )}
-            flexGrow={3}
-            width={100} />
-            <Column
-            columnKey='user'
-            header={<SortHeaderCell {...headerCellProps}> code </SortHeaderCell>}
-            cell={({rowIndex, columnKey, width, height}) => (
-              <Cell
-                width={width}
-                height={height}>
-                { data[rowIndex][columnKey]['code']}
-               </Cell>
-            )}
-            flexGrow={3}
-            width={100} />
-            <Column
-            columnKey='user'
-            header={<SortHeaderCell {...headerCellProps}> name </SortHeaderCell>}
-            cell={({rowIndex, columnKey, width, height}) => (
-              <Cell
-                width={width}
-                height={height}>
-                { data[rowIndex][columnKey]['name']}
-               </Cell>
-            )}
-            flexGrow={3}
-            width={100} />
-            <Column
-            columnKey='user'
-            header={<SortHeaderCell {...headerCellProps}> address </SortHeaderCell>}
-            cell={({rowIndex, columnKey, width, height}) => (
-              <Cell
-                width={width}
-                height={height}>
-                { data[rowIndex][columnKey]['address']}
-               </Cell>
-            )}
-            flexGrow={3}
-            width={100} />
-            <Column
-            columnKey='user'
-            header={<SortHeaderCell {...headerCellProps}> phone </SortHeaderCell>}
-            cell={({rowIndex, columnKey, width, height}) => (
-              <Cell
-                width={width}
-                height={height}>
-                { data[rowIndex][columnKey]['phone']}
-               </Cell>
-            )}
-            flexGrow={3}
-            width={100} />
-            <Column
-            columnKey='user'
-            header={<SortHeaderCell {...headerCellProps}> birthday </SortHeaderCell>}
-            cell={({rowIndex, columnKey, width, height}) => (
-              <Cell
-                width={width}
-                height={height}>
-                { data[rowIndex][columnKey]['birthday']}
-               </Cell>
-            )}
-            flexGrow={3}
-            width={100} />
+            width={100} />))}
           
         </ResponsiveTableWrapper>
       </div>

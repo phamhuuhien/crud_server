@@ -2,28 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom';
 import { Modal, Button, Form, FormGroup, Col, FormControl, ControlLabel, Table, Panel } from 'react-bootstrap'
 import DatePicker from "react-bootstrap-date-picker"
+import { LABELS, CUSTOMER_FIELDS, SERVICE_FIELDS, SERVICES } from '../../constants'
 import './UserModal.styl'
-
-let fields = [
-	'name', 'code', 'address', 'phone', 'birthday', 'numberUsed', 'note'
-]
-
-let extraFields = ['plan', 'price', 'expired', 'dialPlan']
-
-let labels = {
-	name : 'Ten khach hang',
-	code : 'Ma khach hang',
-	address : 'Dia chi',
-	phone : 'So dien thoai',
-	birthday : 'Ngay sinh',
-	numberUsed : 'So nguoi dung',
-	note : 'Ghi chu',
-	service : 'Dich vu',
-	plan : 'Goi cuoc',
-	price : 'Gia cuoc',
-	expired : 'Thoi gian su dung',
-	dialPlan : 'So thue bao'
-}
 
 let controlType = {
 	name : 'text',
@@ -37,8 +17,6 @@ let controlType = {
 	expired : 'number',
 	dialPlan : 'number'
 }
-
-let services = ['FTTH', 'ITV']
 
 class UserModal extends React.Component {
 
@@ -77,15 +55,15 @@ class UserModal extends React.Component {
 		return (<Panel>
 			<Col sm={3}>
 				<FormGroup controlId="formControlsSelect">
-	      	<ControlLabel>{labels['service']}</ControlLabel>
+	      	<ControlLabel>{LABELS['service']}</ControlLabel>
 		      <FormControl componentClass="select" placeholder="select" ref="service">
-		      	{services.map(service => <option key={service} value={service}>{service}</option>)}
+		      	{SERVICES.map(service => <option key={service} value={service}>{service}</option>)}
 		      </FormControl>
 	    	</FormGroup>
     	</Col>
-    	{extraFields.map(item => (<Col sm={item === 'expired' ? 3 : 2}>
+    	{SERVICE_FIELDS.filter(item => item !== 'service').map(item => (<Col sm={item === 'expired' ? 3 : 2}>
     		<FormGroup key={item} controlId="formControlsSelect">
-      		<ControlLabel>{labels[item]}</ControlLabel>
+      		<ControlLabel>{LABELS[item]}</ControlLabel>
 	      	<FormControl type={controlType[item]} placeholder={item} ref={item}>
 	      	</FormControl>
     		</FormGroup>
@@ -102,11 +80,7 @@ class UserModal extends React.Component {
 	    <thead>
 	      <tr>
 	        <th>#</th>
-	        <th>{labels['service']}</th>
-	        <th>{labels['plan']}</th>
-	        <th>{labels['price']}</th>
-	        <th>{labels['expired']}</th>
-	        <th>{labels['dialPlan']}</th>
+	        {SERVICE_FIELDS.map(field => (<th>{LABELS[field]}</th>))}
 	        <th>Delete</th>
 	      </tr>
 	    </thead>
@@ -114,11 +88,7 @@ class UserModal extends React.Component {
 	    {this.props.services.map((item, index) => (
 	      <tr>
 	        <td>{index + 1}</td>
-	        <td>{item['service']}</td>
-	        <td>{item['plan']}</td>
-	        <td>{item['price']}</td>
-	        <td>{item['expired']}</td>
-	        <td>{item['dialPlan']}</td>
+	        {SERVICE_FIELDS.map(field => (<td>{item[field]}</td>))}
 	        <td onClick={() => this.props.removeService(index)}>Delete</td>
 	      </tr>
 	    	))}
@@ -143,9 +113,9 @@ class UserModal extends React.Component {
 
 		      <Modal.Body>
 		        <Form horizontal>
-		        	{fields.map(field =>(<FormGroup key={field} controlId={"formHorizontal" + field } validationState={this.props.error && this.props.error[field] ? "error" : null}>
+		        	{CUSTOMER_FIELDS.map(field =>(<FormGroup key={field} controlId={"formHorizontal" + field } validationState={this.props.error && this.props.error[field] ? "error" : null}>
 					      <Col componentClass={ControlLabel} sm={4}>
-					        {labels[field]}
+					        {LABELS[field]}
 					      </Col>
 					      <Col sm={8}>
 					      	{ this.switchGUI(field) }
