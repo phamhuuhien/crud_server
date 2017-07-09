@@ -45,4 +45,8 @@ function editUser(user) {
   return (dispatch, getState) => dispatch(getUser(user))
 }
 
-export default { fetchData, filterBy, sortBy, openModal, editUser }
+function exportExcel() {
+  window.location.href = "./excel"
+}
+
+export default { fetchData, filterBy, sortBy, openModal, editUser, exportExcel }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, ButtonToolbar } from 'react-bootstrap'
 import NutrientTable from '../../components/NutrientTable'
 import UserPage from '../UserPage'
 import { connect } from 'react-redux'
@@ -10,7 +10,10 @@ const NutrientPage = (props) => {
   return (
     <div>
       <h2> Bang bao cao </h2>
-      <Button bsStyle="primary" onClick={() => props.openModal()}>New</Button>
+      <ButtonToolbar>
+	      <Button bsStyle="primary" onClick={() => props.openModal()}>New</Button>
+	      <Button bsStyle="success" onClick={() => props.exportExcel()}>Export</Button>
+      </ButtonToolbar>
       <NutrientTable {...props} />
       <UserPage />
 

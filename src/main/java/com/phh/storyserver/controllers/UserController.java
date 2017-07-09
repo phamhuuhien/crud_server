@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
-
     @Autowired
     UserRepository userRepository;
 
