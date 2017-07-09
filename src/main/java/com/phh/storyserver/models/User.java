@@ -31,7 +31,7 @@ public class User {
     private Date birthday;
     private int numberUsed;
     private String note;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Service> services;
 
     private static SimpleDateFormat dt = new SimpleDateFormat("MM/dd/yyyy");

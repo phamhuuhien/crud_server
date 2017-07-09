@@ -1,5 +1,5 @@
 import CONSTS from '../constants'
-import { fetchDispatch } from './fetchUtils'
+import { fetchDispatch, getUser } from './fetchUtils'
 
 const apiProps = {
   url: './services',
@@ -42,10 +42,7 @@ function openModal () {
 }
 
 function editUser(user) {
-  return {
-    type: CONSTS.ACTIONS.EDIT_USER,
-    user
-  }
+  return (dispatch, getState) => dispatch(getUser(user))
 }
 
 export default { fetchData, filterBy, sortBy, openModal, editUser }

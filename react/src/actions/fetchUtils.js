@@ -63,6 +63,13 @@ function updateSuccessful(user) {
   }
 }
 
+function getUserSuccess(user) {
+  return {
+    type: ACTIONS.EDIT_USER,
+    user
+  }
+}
+
 export function post (user) {
   return (dispatch) => {
     fetch('/user', {
@@ -76,12 +83,21 @@ export function post (user) {
       })
       .then(response => response.json())
       .then( json => {
-        if(user.user_id) {
+        if(user.userId) {
           dispatch( updateSuccessful( json ))
         }
         else {
           dispatch( saveSuccessful( json ) )
         }})
+      .catch( err => console.log(err) )
+  }
+}
+
+export function getUser (user) {
+  return (dispatch) => {
+    fetch('/user/' + user.user.userId)
+      .then(response => response.json())
+      .then( json => dispatch( getUserSuccess( json )))
       .catch( err => console.log(err) )
   }
 }

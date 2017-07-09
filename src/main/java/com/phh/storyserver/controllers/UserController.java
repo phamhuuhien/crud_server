@@ -28,8 +28,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public User get(final Integer id) {
-        return userRepository.findOne(id);
+    public User get(@PathVariable final Integer id) {
+        User user = userRepository.findOne(id);
+        List<Service> services = user.getServices();
+        for(Service service : services) {
+            service.setUser(null);
+        }
+        return user;
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
