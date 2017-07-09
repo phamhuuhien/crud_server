@@ -63,9 +63,10 @@ class NutrientTable extends React.Component {
   sortData () {
     const {data, sortKey, sortDesc} = this.props
     const multiplier = sortDesc ? -1 : 1
+    const isUserField = CUSTOMER_FIELDS.indexOf(sortKey) >= 0
     data.sort((a, b) => {
-      const aVal = a[sortKey] || 0
-      const bVal = b[sortKey] || 0
+      const aVal = (isUserField ? a['user'][sortKey] : a[sortKey]) || 0
+      const bVal = (isUserField ? b['user'][sortKey] : b[sortKey]) || 0
       return aVal > bVal ? multiplier : (aVal < bVal ? -multiplier : 0)
     })
     return this
@@ -105,13 +106,13 @@ class NutrientTable extends React.Component {
           headerHeight={50}
           rowsCount={data.length}>
           {CUSTOMER_FIELDS.map(field => (<Column
-            columnKey='user'
+            columnKey={field}
             header={<SortHeaderCell {...headerCellProps}> {field} </SortHeaderCell>}
             cell={({rowIndex, columnKey, width, height}) => (
               <Cell
                 width={width}
                 height={height}>
-                { data[rowIndex][columnKey][field]}
+                { data[rowIndex]['user'][field]}
                </Cell>
             )}
             flexGrow={3}
