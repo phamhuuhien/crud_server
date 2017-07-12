@@ -126,7 +126,7 @@ class NutrientTable extends React.Component {
           rowsCount={data.length}>
           {CUSTOMER_FIELDS.map(field => (<Column
             columnKey={field}
-            header={<SortHeaderCell {...headerCellProps}> {field} </SortHeaderCell>}
+            header={<SortHeaderCell {...headerCellProps}> {LABELS[field]} </SortHeaderCell>}
             cell={({rowIndex, columnKey, width, height}) => (
               <Cell
                 width={width}
@@ -138,7 +138,7 @@ class NutrientTable extends React.Component {
             width={100} />))}
           {SERVICE_FIELDS.map(field => (<Column
             columnKey={field}
-            header={<SortHeaderCell {...headerCellProps}> {field} </SortHeaderCell>}
+            header={<SortHeaderCell {...headerCellProps}> {LABELS[field]} </SortHeaderCell>}
             cell={<DataCell data={data} />}
             flexGrow={3}
             width={100} />))}

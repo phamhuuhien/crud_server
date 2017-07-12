@@ -15,7 +15,7 @@ let controlType = {
 	plan : 'text',
 	price : 'number',
 	expired : 'number',
-	dialPlan : 'number'
+	dialPlan : 'text'
 }
 
 class UserModal extends React.Component {

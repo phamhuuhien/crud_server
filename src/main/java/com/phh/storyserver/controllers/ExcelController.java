@@ -47,7 +47,7 @@ public class ExcelController {
         List<Service> services = serviceRepository.findAll();
         int indiceMap = 2;
         Map<String, Object[]> data = new TreeMap<>();
-        data.put("1", new Object[] { "name", "code", "address", "birthday", "phone", "service", "expired", "dialPlan" });
+        data.put("1", new Object[] { "Tên khách hàng", "Mã khách hàng", "Địa chỉ sử dụng", "Ngày sinh", "Số điện thoại", "Dịch vụ", "Thời gian sử dụng", "Số thuê bao" });
 
         for (Service service : services) {
             data.put(Integer.toString(indiceMap),
