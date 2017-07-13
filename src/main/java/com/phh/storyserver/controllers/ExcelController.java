@@ -1,22 +1,28 @@
 package com.phh.storyserver.controllers;
 
 import com.phh.storyserver.models.Service;
+import com.phh.storyserver.models.User;
 import com.phh.storyserver.repositories.ServiceRepository;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Row;
+import com.phh.storyserver.repositories.UserRepository;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -31,6 +37,9 @@ public class ExcelController {
 
     @Autowired
     ServiceRepository serviceRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @RequestMapping(value = "/excel", method = RequestMethod.GET)
     public void home(HttpServletResponse response) throws IOException {
@@ -94,5 +103,77 @@ public class ExcelController {
 
         outStream.flush();
         outStream.close();
+    }
+
+    //@PostMapping("/upload") // //new annotation since 4.3
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
+    public @ResponseBody List<Service> singleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+
+        if (file.isEmpty()) {
+
+        }
+
+        try {
+
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+
+            ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+            Workbook workbook;
+            try {
+                if (file.getOriginalFilename().endsWith("xls")) {
+                    workbook = new HSSFWorkbook(bis);
+                } else if (file.getOriginalFilename().endsWith("xlsx")) {
+                    workbook = new XSSFWorkbook(bis);
+                } else {
+                    throw new IllegalArgumentException("Received file does not have a standard excel extension.");
+                }
+
+                for (Row row : workbook.getSheetAt(0)) {
+                    if (row.getRowNum() <= 1) {
+                        continue;
+                    }
+
+                    String code = row.getCell(1).getStringCellValue();
+                    User user = userRepository.findByCode(code);
+                    if(user == null) {
+                        user = new User();
+                        user.setName(row.getCell(0).getStringCellValue());
+                        user.setCode(row.getCell(1).getStringCellValue());
+                        user.setAddress(row.getCell(2).getStringCellValue());
+                        user.setPhone(row.getCell(3).getStringCellValue());
+                        user.setBirthday(row.getCell(4).getDateCellValue());
+                        user.setNumberUsed(new Double(row.getCell(5).getNumericCellValue()).intValue());
+                        user.setNote(row.getCell(6) == null ? "" : row.getCell(6).getStringCellValue());
+
+                    }
+
+                    Service service = new Service();
+                    service.setService(row.getCell(8).getStringCellValue());
+                    service.setPlan(row.getCell(9).getStringCellValue());
+                    service.setPrice(new Double(row.getCell(10).getNumericCellValue()).intValue());
+                    service.setExpired(new Double(row.getCell(11).getNumericCellValue()).intValue());
+                    service.setDialPlan(row.getCell(12).getStringCellValue());
+                    service.setUser(user);
+
+                    List<Service> services = user.getServices();
+                    if(services == null) {
+                        services = new ArrayList<>();
+                    }
+                    services.add(service);
+                    user.setServices(services);
+
+                    userRepository.save(user);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
     }
 }

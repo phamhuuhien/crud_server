@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ButtonToolbar } from 'react-bootstrap'
+import { FormControl, Button, ButtonToolbar } from 'react-bootstrap'
 import NutrientTable from '../../components/NutrientTable'
 import UserPage from '../UserPage'
 import { connect } from 'react-redux'
@@ -13,6 +13,10 @@ const NutrientPage = (props) => {
       <ButtonToolbar>
 	      <Button bsStyle="primary" onClick={() => props.openModal()}>New</Button>
 	      <Button bsStyle="success" onClick={() => props.exportExcel()}>Export</Button>
+	      <div>
+	      	<input id="file" type="file"/>
+	      </div>
+	      <Button bsStyle="primary" onClick={() => props.importExcel()}>Import</Button>
       </ButtonToolbar>
       <NutrientTable {...props} />
       <UserPage />

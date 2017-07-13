@@ -1,5 +1,6 @@
 import CONSTS from '../constants'
 import { fetchDispatch, getUser } from './fetchUtils'
+import axios from 'axios'
 
 const apiProps = {
   url: './services',
@@ -49,4 +50,14 @@ function exportExcel() {
   window.location.href = "./excel"
 }
 
-export default { fetchData, filterBy, sortBy, openModal, editUser, exportExcel }
+function importExcel() {
+  let data = new FormData()
+  data.append('file', document.getElementById('file').files[0])
+  return (dispatch) => {
+    axios.post('/import', data)
+      .then(response => console.log('success'))
+      .catch(error => console.log('error'))
+  }
+}
+
+export default { fetchData, filterBy, sortBy, openModal, editUser, exportExcel, importExcel }

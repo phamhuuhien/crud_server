@@ -8,5 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  * Created by phhien on 11/25/2016.
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
-    
+
+    User findByCode(String code);
 }
