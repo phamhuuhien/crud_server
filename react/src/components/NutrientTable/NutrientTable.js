@@ -46,9 +46,10 @@ class NutrientTable extends React.Component {
   handleFilterStringChange () {
     return (e) => {
       e.preventDefault()
-      let filterObject = {}
+      let { filterObject } = this.props
+      filterObject = filterObject || {}
       console.log('e', e.target)
-      filterObject[e.target.name] = e.target.value
+      filterObject[e.target.name] = e.target.value.toLowerCase().trim()
       this.props.filterBy(filterObject)
     }
   }
@@ -60,8 +61,8 @@ class NutrientTable extends React.Component {
   filterData () {
     const {data, filterObject} = this.props
     return filterObject && (filterObject.name || filterObject.service)
-        ? data.filter(r => filterObject.name ? r.user.name.toLowerCase().indexOf(filterObject.name) >= 0 : true 
-                        && filterObject.service ? r.service.toLowerCase().indexOf(filterObject.service) >= 0 : true)
+        ? data.filter(r => (filterObject.name ? r.user.name.toLowerCase().indexOf(filterObject.name) >= 0 : true) 
+                        && (filterObject.service ? r.service.toLowerCase().indexOf(filterObject.service) >= 0 : true))
         : data
   }
 
@@ -107,9 +108,7 @@ class NutrientTable extends React.Component {
   render () {
     const { isFetching, filterString, sortBy, sortKey, sortDesc } = this.props
     const headerCellProps = { sortBy, sortKey, sortDesc }
-    console.log('props.data', this.props.data)
     const data = this.sortData().filterData()
-    console.log('data', data)
 
     return (
       <div>
