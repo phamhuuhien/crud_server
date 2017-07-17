@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Header from '../../components/Header'
 import { resetErrorMessage } from '../../actions'
+import Alert from 'react-s-alert'
+import 'react-s-alert/dist/s-alert-default.css'
+import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
 
 class App extends React.Component {
   handleDismissClick () {
@@ -31,6 +34,7 @@ class App extends React.Component {
     const { children } = this.props
     return (
       <div>
+        <Alert stack={{limit: 3}}  timeout={3000}/>
         <Header />
         {this.renderErrorMessage()}
         <main>

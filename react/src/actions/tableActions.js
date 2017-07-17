@@ -1,6 +1,7 @@
 import CONSTS from '../constants'
 import { fetchDispatch, getUser } from './fetchUtils'
 import axios from 'axios'
+import Alert from 'react-s-alert';
 
 const apiProps = {
   url: './services',
@@ -55,8 +56,14 @@ function importExcel() {
   data.append('file', document.getElementById('file').files[0])
   return (dispatch) => {
     axios.post('/import', data)
-      .then(response => console.log('success'))
-      .catch(error => console.log('error'))
+      .then(response => Alert.success('Import success', {
+            position: 'top-right',
+            effect: 'bouncyflip'
+        }))
+      .catch(error => Alert.error('Import error', {
+            position: 'top-right',
+            effect: 'bouncyflip'
+        }))
   }
 }
 
