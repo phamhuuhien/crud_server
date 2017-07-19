@@ -38,6 +38,6 @@ public class User {
 
     @JsonProperty("birthday")
     public String getNgaySinh() {
-        return dt.format(birthday);
+        return birthday == null ? "" : dt.format(birthday);
     }
 }

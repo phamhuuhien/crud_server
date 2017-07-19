@@ -39,7 +39,7 @@ function saveUser () {
 	return (dispatch, getState) => {
 		let item = getState().item
 		let error = {}
-		Object.keys(item).filter(key => key !== 'user_id' && key !== 'note').forEach(key => {
+		Object.keys(item).filter(key => key !== 'user_id' && key !== 'note' && key !== 'birthday').forEach(key => {
 			if(!item[key]) {
 				error[key] = "This Fields is required"
 			}

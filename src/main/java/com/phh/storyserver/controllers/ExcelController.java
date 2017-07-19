@@ -24,6 +24,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -143,7 +145,7 @@ public class ExcelController {
                         user.setAddress(row.getCell(2).getStringCellValue());
                         user.setPhone(row.getCell(3).getStringCellValue());
                         user.setBirthday(row.getCell(4).getDateCellValue());
-                        user.setNumberUsed(new Double(row.getCell(5).getNumericCellValue()).intValue());
+                        user.setNumberUsed(row.getCell(5) == null ? 0 : new Double(row.getCell(5).getNumericCellValue()).intValue());
                         user.setNote(row.getCell(6) == null ? "" : row.getCell(6).getStringCellValue());
 
                     }
@@ -153,7 +155,10 @@ public class ExcelController {
                     service.setPlan(row.getCell(9).getStringCellValue());
                     service.setPrice(new Double(row.getCell(10).getNumericCellValue()).intValue());
                     service.setExpired(new Double(row.getCell(11).getNumericCellValue()).intValue());
-                    service.setDialPlan(row.getCell(12).getStringCellValue());
+                    NumberFormat nf = DecimalFormat.getInstance();
+                    nf.setMaximumFractionDigits(0);
+                    String dialPlan = nf.format(row.getCell(12).getNumericCellValue());
+                    service.setDialPlan(dialPlan.replaceAll(",", ""));
                     service.setUser(user);
 
                     List<Service> services = user.getServices();

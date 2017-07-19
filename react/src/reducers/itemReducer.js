@@ -42,7 +42,7 @@ function handleChange (state = {}, action) {
     case ACTIONS.EDIT_USER:
       return {
         ...action.user,
-        birthday: convertToIsoDate(action.user.birthday),
+        birthday: action.user.birthday ? convertToIsoDate(action.user.birthday) : "",
         modalIsOpen : true
       }
     case ACTIONS.ADD_USER_ERROR:
