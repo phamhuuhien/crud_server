@@ -43,6 +43,8 @@ public class ExcelController {
     @Autowired
     UserRepository userRepository;
 
+    private NumberFormat nf = DecimalFormat.getInstance();
+
     @RequestMapping(value = "/excel", method = RequestMethod.GET)
     public void home(HttpServletResponse response) throws IOException {
         // Creation workbook vide
@@ -135,15 +137,16 @@ public class ExcelController {
                     if (row.getRowNum() <= 1) {
                         continue;
                     }
+                    System.out.println("Insert:" + row.getRowNum());
 
-                    String code = row.getCell(1).getStringCellValue();
+                    String code = getString(row.getCell(1));
                     User user = userRepository.findByCode(code);
                     if(user == null) {
                         user = new User();
                         user.setName(row.getCell(0).getStringCellValue());
-                        user.setCode(row.getCell(1).getStringCellValue());
+                        user.setCode(getString(row.getCell(1)));
                         user.setAddress(row.getCell(2).getStringCellValue());
-                        user.setPhone(row.getCell(3).getStringCellValue());
+                        user.setPhone(getString(row.getCell(3)));
                         user.setBirthday(row.getCell(4).getDateCellValue());
                         user.setNumberUsed(row.getCell(5) == null ? 0 : new Double(row.getCell(5).getNumericCellValue()).intValue());
                         user.setNote(row.getCell(6) == null ? "" : row.getCell(6).getStringCellValue());
@@ -155,10 +158,7 @@ public class ExcelController {
                     service.setPlan(row.getCell(9).getStringCellValue());
                     service.setPrice(new Double(row.getCell(10).getNumericCellValue()).intValue());
                     service.setExpired(new Double(row.getCell(11).getNumericCellValue()).intValue());
-                    NumberFormat nf = DecimalFormat.getInstance();
-                    nf.setMaximumFractionDigits(0);
-                    String dialPlan = nf.format(row.getCell(12).getNumericCellValue());
-                    service.setDialPlan(dialPlan.replaceAll(",", ""));
+                    service.setDialPlan(getString(row.getCell(12)));
                     service.setUser(user);
 
                     List<Service> services = user.getServices();
@@ -180,5 +180,17 @@ public class ExcelController {
         }
 
         return new ArrayList<>();
+    }
+
+    private String getString(Cell cell) {
+        String result ="";
+        CellType type = cell.getCellTypeEnum();
+        if(type == CellType.NUMERIC) {
+            String dialPlan = nf.format(cell.getNumericCellValue());
+            result = dialPlan.replaceAll(",", "");
+        } else {
+            result = cell.getStringCellValue();
+        }
+        return result;
     }
 }
